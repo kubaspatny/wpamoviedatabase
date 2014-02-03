@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <f:view id="login">
+        <h:head>
+            <title>WPA Movie Database - Login</title>
+            <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' />
+            <link rel="stylesheet" href="resources/css/style.css" />
+        </h:head>
+
+        <h:body>
+
+            <div id="header">
+                <div class="page-full-width cf">
+                    <div id="login-intro" class="fl">
+                        
+                        <h1><h:outputText value="#{string['login']}" /></h1>
+                        <h5><h:outputText value="#{string['credentials']}" /></h5>
+                    </div>	
+                </div>
+            </div>
+
+            <div id="content">
+
+                <form action="static/j_spring_security_check" method="POST" id="login-form">
+                    <p>
+                        <label for="j_username"><h:outputText value="#{string['username']}" /></label>
+                    <input type='text' name='j_username' value=''/><br/>
+                    </p>
+                    <p>
+                        <label for="j_password"><h:outputText value="#{string['password']}" /></label>
+                    <input type='password' name='j_password' /><br/>
+                    </p>
+                    <h:panelGroup layout="block" styleClass="error-box" rendered="#{not empty param.login_error}">
+                        <h:outputText value="#{string['error']}" />
+                    </h:panelGroup>
+                    <p>
+                    <input name="submit" type="submit" value="submit" />
+                    </p>
+
+                    <br/>
+                    
+                    <p><h:outputText value="#{string['newhere']}" /> <h:link value="#{string['signup']}" outcome="registration.xhtml"/></p>
+
+
+                </form> 
+
+            </div>
+
+            <div id="footer">			
+                <p><strong><h:outputText value="#{string['author']}" /></strong> <h:outputLink id="link">Kuba Spatny</h:outputLink></p>
+            </div>
+
+
+
+
+
+
+        </h:body>
+    </f:view>
+</html>
+

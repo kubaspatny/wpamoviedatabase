@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      >
+    <h:body>
+
+        <ui:composition template="../template/commonLayout.xhtml">
+            <ui:define name="title"><h:outputText value="NEW MOVIE | WPA MOVIE DATABASE"/></ui:define>
+            <ui:define name="content">
+
+                <!-- MAIN CONTENT -->
+                <div id="content">
+                    <h:form>
+
+                        <div class="page-full-width cf">
+                            <div class="content-module">
+                                <div class="content-module-maxheading cf">
+                                    <h2 class="fl">
+                                        <h:outputText value="ADDING NEW MOVIE" />
+                                    </h2>
+                                </div> <!-- end content-module-heading -->
+
+                                <div class="content-module-main">
+
+                                    <div class="content-module">
+
+                                        <div class="content-module-heading cf">
+                                            <h3 class="fl">Basic Information</h3>
+                                        </div> <!-- end content-module-heading -->
+
+                                        <div class="content-module-main">
+                                            <div class="parent moviepreview">
+                                                
+                                                <p>
+                                                    <p><strong>Movie name: </strong></p>
+                                                    <h:inputText id="movie_name" class="round full-width-input" value="#{newMovieBB.movie_name}" 
+                                                                 required="true"
+                                                                 requiredMessage="Please enter the name of the movie."
+                                                                 style="#{component.valid ? '':'border-color: #CF4425;'}"
+                                                                 validator="#{newMovieBB.validateMovieName}">
+                                                        
+                                                    </h:inputText>    
+                                                    <div class="error-message">
+                                                        <h:message for="movie_name" styleClass="error-input"></h:message>
+                                                    </div>
+                                                </p>
+
+                                                <p>
+                                                    <p><strong>Poster URL: </strong></p>
+                                                    <h:inputText id="poster-url" class="round full-width-input" value="#{newMovieBB.poster_url}"
+                                                                 required="true"
+                                                                 requiredMessage="Please enter valid url."
+                                                                 style="#{component.valid ? '':'border-color: #CF4425;'}"
+                                                                 validator="#{newMovieBB.validateLenght255}">
+                                                        
+                                                    </h:inputText>    
+                                                    <div class="error-message">
+                                                        <h:message for="poster-url" styleClass="error-input"></h:message>
+                                                    </div>
+                                                </p>
+
+                                                <p>
+                                                    <p><strong>Short Info: </strong></p>
+                                                    <h:inputText id="short_info" class="round full-width-input" value="#{newMovieBB.short_info}"
+                                                                 required="true"
+                                                                 requiredMessage="Please enter valid url."
+                                                                 style="#{component.valid ? '':'border-color: #CF4425;'}"
+                                                                 />
+                                                    <div class="error-message">
+                                                        <h:message for="short_info" styleClass="error-input"></h:message>
+                                                    </div>
+                                                </p>
+
+                                                <p><strong>Director: </strong></p>
+                                                <rich:autocomplete value="#{newMovieBB.newDirector}" mode="cachedAjax" minChars="1" style="border: 0;" autocompleteMethod="#{autocompleteBB.completeDir}">
+                                                </rich:autocomplete>                                                
+                                                <p></p>
+
+                                                <p><strong>Writer: </strong></p>
+                                                <rich:autocomplete value="#{newMovieBB.newWriter}" mode="cachedAjax" minChars="1" style="border: 0;" autocompleteMethod="#{autocompleteBB.completeWr}">
+                                                </rich:autocomplete>                                                
+                                                <p></p>
+
+
+                                                <p><strong>Production Company: </strong></p>
+                                                <rich:autocomplete value="#{newMovieBB.newProducer}" mode="cachedAjax" minChars="1" style="border: 0;" autocompleteMethod="#{autocompleteBB.completeProd}">
+                                                </rich:autocomplete>                                                
+                                                <p></p>
+
+                                                <p>
+                                                    <p><strong>Length: </strong></p>
+                                                    <h:inputText id="movie_length" class="round" value="#{newMovieBB.movie_length}"
+                                                                 validator="#{newMovieBB.validateNumber}"/>
+                                                    <div class="error-message">
+                                                        <h:message for="movie_length" styleClass="error-input"></h:message>
+                                                    </div>
+                                                        
+                                                </p>
+
+                                                <p>
+                                                    <p><strong>Budget: </strong></p>
+                                                    <h:inputText id="budget" class="round" value="#{newMovieBB.budget}"
+                                                                 required="true"
+                                                                 requiredMessage="Please enter a budget."
+                                                                 style="#{component.valid ? '':'border-color: #CF4425;'}">
+                                                        <f:validateLength maximum="9" />
+                                                    </h:inputText>
+                                                    <div class="error-message">
+                                                        <h:message for="budget" styleClass="error-input"></h:message>
+                                                    </div>
+                                                </p>
+
+
+                                                <p><strong>Genre: </strong></p>
+                                                <h:selectOneMenu style="width: 18.75em;" id="genre" value="#{newMovieBB.genre}">
+                                                    <f:selectItem id="item1" itemLabel="Action" itemValue="Action" />
+                                                    <f:selectItem id="item2" itemLabel="Comedy" itemValue="Comedy" />
+                                                    <f:selectItem id="item3" itemLabel="Fantasy" itemValue="Fantasy" />
+                                                    <f:selectItem id="item4" itemLabel="Sci-fi" itemValue="Sci-fi" />
+                                                </h:selectOneMenu>
+                                                <p></p>
+
+                                                <p><strong>Release Date: </strong></p>
+                                                <a4j:outputPanel id="calendar" layout="block">
+                                                    <rich:calendar value="#{newMovieBB.date}"
+                                                                   locale="en/US"
+                                                                   popup="true"
+                                                                   datePattern="dd/MM/yy"
+                                                                   showApplyButton="false"
+                                                                   popupStyle="width:0px"
+                                                                   style="width: 18.75em;"/>
+                                                </a4j:outputPanel>
+                                                <p></p>
+
+                                                <p><strong>Ranking: </strong></p>
+                                                <h:selectOneMenu style="width: 18.75em;" id="age_rating" value="#{newMovieBB.age_rating }">
+                                                    <f:selectItem id="i1" itemLabel="G" itemValue="G" />
+                                                    <f:selectItem id="i2" itemLabel="PG" itemValue="PG" />
+                                                    <f:selectItem id="i3" itemLabel="PG-13" itemValue="PG-13" />
+                                                    <f:selectItem id="i4" itemLabel="R" itemValue="R" />
+                                                </h:selectOneMenu>
+                                                <p></p>
+
+                                                <p>
+                                                    <p><strong>Long Info: </strong></p>
+                                                    <h:inputTextarea id="long_info" class="round full-width-textarea" value="#{newMovieBB.long_info}" cols="30" rows="10" />
+                                                </p>
+
+                                            </div>     
+
+
+                                        </div> <!-- end content-module-main -->
+
+                                    </div> <!-- end content-module -->
+
+                                    <h:commandButton styleClass="round blue ic-right-arrow" value="Save" action="#{newMovieBB.addMovie}"/>
+
+                                </div> <!-- end full-width -->
+
+                            </div> <!-- end content -->
+
+                        </div>
+
+                    </h:form>
+
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+
+</html>

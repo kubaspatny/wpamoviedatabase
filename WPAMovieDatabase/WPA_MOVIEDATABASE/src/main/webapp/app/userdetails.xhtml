@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:sec="http://www.springframework.org/security/facelets/tags"
+      >
+    <h:body>
+
+        <ui:composition template="../template/commonLayout.xhtml">
+            <ui:define name="title"><h:outputText value="USER DETAILS | WPA MOVIEDATABASE"/></ui:define>
+            <ui:define name="content">
+
+                <!-- MAIN CONTENT -->
+                <div id="content">
+
+                    <div class="page-full-width cf">
+                        <div class="content-module">
+                            <div class="content-module-maxheading cf">
+                                <h2 class="fl">
+                                    <h:outputText value="#{userBB.user.fullName}" />
+                                </h2>
+                                
+                                <h2 class="fr">
+                                    <h:link style="color: white;" outcome="useredit" value="EDIT"/>
+                                </h2>
+                               
+
+                            </div> <!-- end content-module-heading -->
+
+                            <div class="content-module-main">
+
+                                <div class="half-size-column fl">
+
+                                    <div class="content-module">
+
+                                        <div class="content-module-heading cf">
+                                            <h3 class="fl">Basic Information</h3>
+                                        </div> <!-- end content-module-heading -->
+
+                                        <div class="content-module-main">
+
+                                            <div class="parent moviepreview">
+
+                                                <h:graphicImage styleClass="poster fl" url="#{userBB.user.image_url}" id="image1"/>
+                                                <p><h:outputText value="#{userBB.user.biography}"/></p>
+                                                <p><strong>First Name: </strong><h:outputText value="#{userBB.user.first_name}"></h:outputText></p>
+                                                <p><strong>Last Name: </strong><h:outputText value="#{userBB.user.last_name}"></h:outputText></p>
+                                                <p><strong>Date of birth: </strong><h:outputText value="#{userBB.user.date_of_birth}"></h:outputText></p>
+                                                <p><strong>Email: </strong><h:outputText value="#{userBB.user.email}"></h:outputText></p>
+                                                <p><strong>Username: </strong><h:outputText value="#{userBB.user.username}"></h:outputText></p>
+
+                                            </div>     
+
+                                        </div> <!-- end content-module-main -->
+
+                                    </div> <!-- end content-module -->
+
+                                </div>
+                                <h:panelGroup layout="block" rendered="#{not empty userBB.user.address}" >
+                                    <div class="half-size-column fr">
+
+                                        <div class="content-module">
+
+                                            <div class="content-module-heading cf">
+                                                <h3 class="fl">Address</h3>
+                                            </div> <!-- end content-module-heading -->
+
+                                            <div class="content-module-main parent moviepreview">
+                                                <p><strong>Street: </strong><h:outputText value="#{userBB.user.address.street}"></h:outputText><h:outputText value=" #{userBB.user.address.street_number}"></h:outputText></p>
+                                                <p><strong>City: </strong><h:outputText value="#{userBB.user.address.city}"></h:outputText></p>
+                                                <p><strong>Postal Number: </strong><h:outputText value="#{userBB.user.address.city_post_code}"></h:outputText></p>
+                                                <p><strong>Country: </strong><h:outputText value="#{userBB.user.address.country}"></h:outputText></p>
+                                            </div>
+
+                                        </div> <!-- end content-module -->
+                                    </div>
+                                </h:panelGroup>
+
+                            </div>
+                        </div>
+
+                    </div> <!-- end full-width -->
+
+                </div> <!-- end content -->
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+
+</html>

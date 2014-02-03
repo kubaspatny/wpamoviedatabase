@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      >
+    <h:body>
+
+        <ui:composition template="../template/commonLayout.xhtml">
+            <ui:define name="title"><h:outputText value="EDIT | #{editActorBB.actor.fullName}"/></ui:define>
+            <ui:define name="content">
+
+
+
+                <!-- MAIN CONTENT -->
+                <div id="content">
+                    <h:form>
+
+                        <div class="page-full-width cf">
+                            <div class="content-module">
+                                <div class="content-module-maxheading cf">
+                                    <h2 class="fl">
+                                        <h:outputText value="EDITING: #{editActorBB.actor.fullName}" />
+                                    </h2>
+                                </div> <!-- end content-module-heading -->
+
+                                <div class="content-module-main">
+
+                                    <div class="content-module">
+
+                                        <div class="content-module-heading cf">
+                                            <h3 class="fl">Basic Information</h3>
+                                        </div> <!-- end content-module-heading -->
+
+                                        <div class="content-module-main">
+                                            <div class="parent moviepreview">
+                                                <input type="hidden" id="id" name="id" value="#{param.id}"/>
+                                                <p>
+                                                    <p><strong>Image Url: </strong></p>
+                                                    <h:inputText id="image_url" class="round full-width-input" value="#{editActorBB.image_url}"
+                                                                 required="true"
+                                                                 requiredMessage="Please image url."
+                                                                 style="#{component.valid ? '':'border-color: #CF4425;'}"
+                                                                 validator="#{editActorBB.validateLenght255}"/>
+                                                        
+                                                    <div class="error-message">
+                                                        <h:message for="image_url" styleClass="error-input"></h:message>
+                                                    </div>
+                                                </p>
+
+                                                <p>
+                                                    <p><strong>Biography: </strong></p>
+                                                    <h:inputText id="biography" class="round full-width-input" value="#{editActorBB.biography}" />
+                                                </p>
+
+                                                <p>
+                                                    <p><strong>First Name: </strong></p>
+                                                    <h:inputText id="first_name" class="round full-width-input" value="#{editActorBB.first_name}"
+                                                                 required="true"
+                                                                 requiredMessage="Please actor's name."
+                                                                 style="#{component.valid ? '':'border-color: #CF4425;'}"
+                                                                 validator="#{editActorBB.validateLenght255}"/>
+                                                        
+                                                    <div class="error-message">
+                                                        <h:message for="first_name" styleClass="error-input"></h:message>
+                                                    </div>
+                                                </p>
+
+                                                <p>
+                                                    <p><strong>Last Name: </strong></p>
+                                                    <h:inputText id="last_name" class="round full-width-input" value="#{editActorBB.last_name}"
+                                                                 required="true"
+                                                                 requiredMessage="Please actor's name."
+                                                                 style="#{component.valid ? '':'border-color: #CF4425;'}"
+                                                                 validator="#{editActorBB.validateLenght255}"/>
+                                                        
+                                                    <div class="error-message">
+                                                        <h:message for="last_name" styleClass="error-input"></h:message>
+                                                    </div>
+                                                </p>
+
+                                                <p><strong>Date of birth: </strong></p>
+                                                <a4j:outputPanel id="calendar" layout="block">
+                                                    <rich:calendar value="#{editActorBB.dob}"
+                                                                   locale="en/US"
+                                                                   popup="true"
+                                                                   datePattern="dd/MM/yy"
+                                                                   showApplyButton="false"
+                                                                   popupStyle="width:0px"
+                                                                   style="width: 18.75em;"/>
+                                                </a4j:outputPanel>
+                                                <p></p>
+
+                                            </div>     
+
+                                        </div> <!-- end content-module-main -->
+
+                                    </div> <!-- end content-module -->
+
+                                    <h:commandButton styleClass="round blue ic-right-arrow" value="Save" action="#{editActorBB.save()}"/>
+                                    <h:commandButton styleClass="round blue ic-right-arrow fr" value="Delete" action="#{editActorBB.delete()}"/>
+
+                                </div> <!-- end full-width -->
+
+                            </div> <!-- end content -->
+
+                        </div>
+
+                    </h:form>
+                    
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+
+</html>

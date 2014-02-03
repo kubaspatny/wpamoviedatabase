@@ -1,0 +1,191 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <f:view>
+        <f:event listener="#{movieBB.validate}" type="preRenderView"/>
+        <h:head>
+            <meta charset="utf-8"></meta>
+            <title>Full width page</title>
+
+            <!-- Stylesheets -->
+            <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet'></link>
+            <link rel="stylesheet" href="resources/css/style.css"></link>
+
+            <!-- jQuery & JS files -->
+            <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+            <script type="text/javascript">
+                jQuery(document).ready(function() {
+                    var $ = jQuery;
+                    var Element = ".poster";
+                    $(Element).error(function() {
+                        $(this).unbind("error").attr("src", "http://l.yimg.com/os/mit/media/m/entity/images/movie_placeholder-103642.png");
+                    });
+                });
+            </script>
+        </h:head>
+
+        <h:body>
+
+            <!-- TOP BAR -->
+            <div id="top-bar">
+
+                <div class="page-full-width cf">
+
+                    <ul id="nav" class="fl">
+                        <li class="v-sep"><a href="#" class="round button dark menu-user image-left">Logged in as <strong><h:outputText value="#{userBB.user.username}"></h:outputText></strong></a>
+                            <ul>
+                                <li><a href="#">Profile</a></li>						
+                                <li><a href="#">Change Password</a></li>						
+                            </ul> 
+
+                        </li>
+                    </ul>
+
+                    <ul id="nav" class="fl">
+                        <li><h:outputLink styleClass="round button dark">Top 10</h:outputLink></li>
+                        <li><h:outputLink styleClass="round button dark">Genres</h:outputLink></li>
+                        <li class="v-sep"><h:outputLink styleClass="round button dark" value="sampleindex.xhtml">All</h:outputLink></li>                            
+                    </ul>
+
+                    <!-- c:if (user.isAdmin) -->
+
+                    <ul id="nav" class="fl">
+                        <li class="v-sep"><h:outputLink styleClass="round button dark image-right ic-add">Add movie</h:outputLink></li>
+                    </ul>
+
+                    <!-- admin menu -->
+
+                    <ul id="nav" class="fl">
+                        <li>
+                            <form action="#" method="POST" id="search-form">
+                                <fieldset>
+                                    <input type="text" id="search-keyword" class="round button dark ic-search image-right"/>
+                                    <input type="hidden" value="SUBMIT" />
+                                </fieldset>
+                            </form>
+                        </li>
+                    </ul>
+
+                    <form>
+                        <a href="#" class="round button dark menu-logoff image-left fr">Log out</a>
+                    </form>
+
+                </div> <!-- end full-width -->	
+
+            </div> <!-- end top-bar -->
+
+            <!-- MAIN CONTENT -->
+            <div id="content">
+
+                <div class="page-full-width cf">
+                    <div class="content-module">
+                        <div class="content-module-maxheading cf">
+                            <h2 class="fl">
+                                <h:outputText value="#{movieBB.movie.name}" />
+                            </h2>
+                        </div> <!-- end content-module-heading -->
+
+                        <div class="content-module-main">
+
+                            <div class="half-size-column fl">
+
+                                <div class="content-module">
+
+                                    <div class="content-module-heading cf">
+                                        <h3 class="fl">Basic Information</h3>
+                                    </div> <!-- end content-module-heading -->
+
+                                    <div class="content-module-main">
+
+                                        <div class="parent moviepreview">
+
+                                            <h:graphicImage styleClass="poster fl" url="#{movieBB.movie.poster_url}" id="image1"/>
+                                            <p><h:outputText value="#{movieBB.movie.short_info}"/></p>
+                                            <p><strong>Director: </strong><h:outputText value="#{empty movieBB.movie.director ? 'Not added yet.' : movieBB.movie.director.fullName}"></h:outputText></p>
+                                            <p><strong>Writer: </strong><h:outputText value="#{empty movieBB.movie.writer ? 'Not added yet.' : movieBB.movie.writer.fullName}"></h:outputText></p>
+                                            <p><strong>Stars: </strong>
+
+                                                <ui:repeat value="#{movieBB.stars}" var="actor" varStatus="status">
+                                                    <h:outputText value="#{actor.fullName}"/>
+                                                    <h:outputText value="#{status.last ? '' : ', '}"/>
+                                                </ui:repeat>
+
+                                            </p>
+                                            <p><strong>Length: </strong><h:outputText value="#{empty movieBB.movie.movie_length ? 'Not added yet.' : movieBB.movie.movie_length}"></h:outputText></p>
+                                            <p><strong>Genre: </strong><h:outputText value="#{empty movieBB.movie.genre ? 'Not added yet.' : movieBB.movie.genre}"></h:outputText></p>
+                                            <p><strong>Release Date: </strong><h:outputText value="#{empty movieBB.movie.release_date ? 'Not added yet.' : movieBB.movie.release_date}"></h:outputText></p>
+                                            <p><strong>Ranking: </strong><h:outputText value="#{empty movieBB.movie.age_rating ? 'Not added yet.' : movieBB.movie.age_rating}"></h:outputText></p>
+
+                                        </div>     
+
+                                        <div class="stripe-separator"><!--  --></div>
+                                        <p><h:outputText value="#{movieBB.movie.long_info}"/></p>
+
+                                    </div> <!-- end content-module-main -->
+
+                                </div> <!-- end content-module -->
+
+                            </div>
+
+                            <div class="half-size-column fr">
+
+                                <div class="content-module">
+
+                                    <div class="content-module-heading cf">
+                                        <h3 class="fl">Cast</h3>
+                                    </div> <!-- end content-module-heading -->
+                                    
+
+                                    <h:dataTable value="#{movieBB.movie.cast}" var="role" styleClass="cast">
+                                            
+                                            
+                                            <h:column>
+                                                <b><h:outputText value="#{role.actor.fullName}"/></b>
+                                            </h:column>
+
+                                            <h:column>
+                                                <h:outputText value="#{role.role_name}"/>
+                                            </h:column>
+
+                                        </h:dataTable>
+
+                                </div> <!-- end content-module -->
+                                
+                                <div class="content-module">
+
+                                    <div class="content-module-heading cf">
+                                        <h3 class="fl">Additional Info</h3>
+                                    </div> <!-- end content-module-heading -->
+
+                                    <div class="content-module-main moviepreview">
+                                        <p><strong>Production Company:  </strong><h:outputText value="#{empty movieBB.movie.producer ? 'Not added yet.' : movieBB.movie.producer.name}"></h:outputText></p>
+                                        <p><strong>Created by:  </strong><h:outputText value="#{empty movieBB.movie.createdBy ? 'Not added yet.' : movieBB.movie.createdBy.username}"></h:outputText></p>
+                                           
+
+                                    </div> <!-- end content-module-main -->
+
+                                </div> <!-- end content-module -->
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div> <!-- end full-width -->
+
+            </div> <!-- end content -->
+
+            <!-- FOOTER -->
+            <div id="footer">
+                <p><strong>WPA Movie database</strong> by <a href="#">Kuba Spatny</a></p>
+            </div> <!-- end footer -->    
+
+        </h:body>
+    </f:view>
+</html>
+

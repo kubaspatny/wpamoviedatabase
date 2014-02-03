@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:sec="http://www.springframework.org/security/facelets/tags"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      >
+    <h:body>
+
+        <ui:composition template="../template/commonLayout.xhtml">
+            <ui:define name="title"><h:outputText value="USER DETAILS | WPA MOVIEDATABASE"/></ui:define>
+            <ui:define name="content">
+
+                <!-- MAIN CONTENT -->
+                <div id="content">
+                    <h:form>
+                        <div class="page-full-width cf">
+                            <div class="content-module">
+                                <div class="content-module-maxheading cf">
+                                    <h2 class="fl">
+                                        <h:outputText value="#{userBB.user.username}" />
+                                    </h2>
+
+                                </div> <!-- end content-module-heading -->
+
+                                <div class="content-module-main">
+
+                                    <div class="half-size-column fl">
+
+                                        <div class="content-module">
+
+                                            <div class="content-module-heading cf">
+                                                <h3 class="fl">Basic Information</h3>
+                                            </div> <!-- end content-module-heading -->
+
+                                            <div class="content-module-main">
+
+                                                <div class="parent moviepreview">
+
+                                                    <p>
+                                                        <p><strong>Image Url: </strong></p>
+                                                        <h:inputText id="image_url" class="round full-width-input" value="#{editUserBB.user.image_url}"
+                                                                     validator="#{editUserBB.validateLenght255}"/>
+                                                        <div class="error-message">
+                                                            <h:message for="image_url" styleClass="error-input"></h:message>
+                                                        </div>
+                                                    </p>
+
+                                                    <p>
+                                                        <p><strong>Biography: </strong></p>
+                                                        <h:inputText id="biography" class="round full-width-input" value="#{editUserBB.user.biography}" />
+                                                    </p>
+
+                                                    <p>
+                                                        <p><strong>First Name: </strong></p>
+                                                        <h:inputText id="first_name" class="round full-width-input" value="#{editUserBB.user.first_name}" 
+                                                                     validator="#{editUserBB.validateName}"/>
+                                                        <div class="error-message">
+                                                            <h:message for="first_name" styleClass="error-input"></h:message>
+                                                        </div>
+                                                    </p>
+
+                                                    <p>
+                                                        <p><strong>Last Name: </strong></p>
+                                                        <h:inputText id="last_name" class="round full-width-input" value="#{editUserBB.user.last_name}" 
+                                                                     validator="#{editUserBB.validateName}"/>
+                                                        <div class="error-message">
+                                                            <h:message for="last_name" styleClass="error-input"></h:message>
+                                                        </div>
+                                                    </p>
+
+                                                    <p><strong>Date of birth: </strong></p>
+                                                    <a4j:outputPanel id="calendar" layout="block">
+                                                        <rich:calendar value="#{editUserBB.user.date_of_birth}"
+                                                                       locale="en/US"
+                                                                       popup="true"
+                                                                       datePattern="dd/MM/yy"
+                                                                       showApplyButton="false"
+                                                                       popupStyle="width:0px"
+                                                                       style="width: 18.75em;"/>
+                                                    </a4j:outputPanel>
+                                                    <p></p>
+
+                                                    <p>
+                                                        <p><strong>Email: </strong></p>
+                                                        <h:inputText id="email" class="round full-width-input" value="#{editUserBB.user.email}" 
+                                                                     validator="#{editUserBB.validateEmail}"/>
+                                                        <div class="error-message">
+                                                            <h:message for="email" styleClass="error-input"></h:message>
+                                                        </div>
+                                                    </p>
+
+                                                </div>     
+
+                                            </div> <!-- end content-module-main -->
+
+                                        </div> <!-- end content-module -->
+
+                                    </div>
+                                    <h:panelGroup layout="block">
+                                        <div class="half-size-column fr">
+
+                                            <div class="content-module">
+
+                                                <div class="content-module-heading cf">
+                                                    <h3 class="fl">Address</h3>
+                                                </div> <!-- end content-module-heading -->
+
+                                                <div class="content-module-main parent moviepreview">
+                                                    <p>
+                                                        <p><strong>Street: </strong></p>
+                                                        <h:inputText id="street" class="round full-width-input" value="#{editUserBB.user.address.street}"
+                                                                     validator="#{editUserBB.validateLenght255}"/>
+                                                        <div class="error-message">
+                                                            <h:message for="street" styleClass="error-input"></h:message>
+                                                        </div>
+                                                    </p>
+                                                    <p>
+                                                        <p><strong>Street Number: </strong></p>
+                                                        <h:inputText id="street_number" class="round full-width-input" value="#{editUserBB.street_number}"
+                                                                     required="true"
+                                                                     requiredMessage="Please street number."
+                                                                     style="#{component.valid ? '':'border-color: #CF4425;'}"
+                                                                     validator="#{editUserBB.validateStreetNumber}"/>
+                                                        <div class="error-message">
+                                                            <h:message for="street_number" styleClass="error-input"></h:message>
+                                                        </div>
+                                                    </p>
+                                                    <p>
+                                                        <p><strong>City: </strong></p>
+                                                        <h:inputText id="city" class="round full-width-input" value="#{editUserBB.user.address.city}"
+                                                                     validator="#{editUserBB.validateLenght255}"/>
+                                                        <div class="error-message">
+                                                            <h:message for="city" styleClass="error-input"></h:message>
+                                                        </div>
+                                                    </p>
+                                                    <p>
+                                                        <p><strong>Postal Number: </strong></p>
+                                                        <h:inputText id="postal_number" class="round full-width-input" value="#{editUserBB.postal_number}"
+                                                                     required="true"
+                                                                     requiredMessage="Please postal number."
+                                                                     style="#{component.valid ? '':'border-color: #CF4425;'}"
+                                                                     validator="#{editUserBB.validateStreetNumber}"/>
+                                                        <div class="error-message">
+                                                            <h:message for="postal_number" styleClass="error-input"></h:message>
+                                                        </div>
+                                                    </p>
+                                                    <p>
+                                                        <p><strong>Country </strong></p>
+                                                        <h:inputText id="country" class="round full-width-input" value="#{editUserBB.user.address.country}"
+                                                                     validator="#{editUserBB.validateLenght255}"/>
+                                                        <div class="error-message">
+                                                            <h:message for="country" styleClass="error-input"></h:message>
+                                                        </div>
+                                                        
+                                                    </p>
+
+                                                </div>
+
+                                            </div> <!-- end content-module -->
+                                        </div>
+                                    </h:panelGroup>
+
+
+                                </div>
+
+                            </div>
+
+                            <br></br>
+                            <h:commandButton styleClass="round blue ic-right-arrow" value="Save" action="#{editUserBB.save()}" />
+
+
+                        </div> <!-- end full-width -->
+                    </h:form>
+                </div> <!-- end content -->
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+
+</html>

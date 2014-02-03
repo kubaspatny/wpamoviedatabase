@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <f:view id="login">
+        <h:head>
+            <title>WPA Movie Database - Registration</title>
+            <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' />
+            <link rel="stylesheet" href="resources/css/style.css" />
+        </h:head>
+
+        <h:body>
+
+            <div id="header">
+                <div class="page-full-width cf">
+                    <div id="login-intro" class="fl">
+                        <h1>Register to WPA Movie Database</h1>
+                        <h5>Please fill out your credentials below</h5>
+                    </div>	
+                </div>
+            </div>
+
+            <div id="content">
+
+                <h:form id="registration-form">
+                    <fieldset>                    
+
+                        <p>
+                            <label for="first-name" >First name</label>   
+                            <h:inputText  id="first-name" class="round full-width-input"                                   
+                                          required="true"
+                                          requiredMessage="Please enter your first name."
+                                          style="#{component.valid ? '':'border-color: #CF4425;'}"
+                                          value="#{registrationBB.firstName}"
+                                          validator="#{registrationBB.validateName}"
+                                          />
+
+                            <div class="error-message">
+                                <h:message for="first-name" styleClass="error-input"></h:message>
+                            </div>
+
+                        </p>
+
+
+
+                        <p>
+                            <label for="last-name" >Last name</label>   
+                            <h:inputText id="last-name" class="round full-width-input"
+                                         required="true"
+                                         requiredMessage="Please enter your last name."
+                                         style="#{component.valid ? '':'border-color: #CF4425;'}"
+                                         value="#{registrationBB.lastName}"
+                                         validator="#{registrationBB.validateName}"
+                                         />
+                            <div class="error-message">
+                                <h:message for="last-name" styleClass="error-input"></h:message>
+                            </div>
+                        </p>
+
+                        <p>
+                            <label for="age" >Date of birth (DD/MM/YYYY)</label>
+                            <h:inputText id="age" class="round full-width-input"
+                                         required="true"
+                                         requiredMessage="Please enter your age."
+                                         style="#{component.valid ? '':'border-color: #CF4425;'}"
+                                         value="#{registrationBB.dateOfBirth}"
+                                         validator="#{registrationBB.validateDOB}"
+                                         />
+                            <div class="error-message">
+                                <h:message for="age" styleClass="error-input"></h:message>
+                            </div>
+                        </p>
+
+                        <p>
+                            <label for="email" >Email</label>   
+                            <h:inputText id="email" class="round full-width-input"
+                                         required="true"
+                                         requiredMessage="Please enter your email address."
+                                         style="#{component.valid ? '':'border-color: #CF4425;'}"
+                                         value="#{registrationBB.email}"
+                                         validator="#{registrationBB.validateEmail}"
+                                         />
+                            <div class="error-message">
+                                <h:message for="email" styleClass="error-input"></h:message>
+                            </div>
+                        </p>
+
+                        <p>
+                            <label for="registration-username" >Username</label>   
+                            <h:inputText id="registration-username" class="round full-width-input"
+                                         required="true"
+                                         requiredMessage="Please enter your username."
+                                         style="#{component.valid ? '':'border-color: #CF4425;'}"
+                                         value="#{registrationBB.username}"
+                                         validator="#{registrationBB.validateUsername}"
+                                         />
+                            <div class="error-message">
+                                <h:message for="registration-username" styleClass="error-input"></h:message>
+                            </div>          
+                        </p>
+
+                        <p>
+                            <label for="registration-password" >Password</label>   
+                            <h:inputSecret id="registration-password" class="round full-width-input"
+                                           required="true"
+                                           requiredMessage="Please enter your password."
+                                           style="#{component.valid ? '':'border-color: #CF4425;'}"
+                                           value="#{registrationBB.password}"
+                                           validator="#{registrationBB.validatePassEquality}"
+                                           >
+
+                                <!-- <f:validator validatorId="passwordValidator" /> -->
+                                <f:attribute name="pass_confirm" value="#{pass_confirm}" />
+
+
+
+                            </h:inputSecret>
+                            <div class="error-message">
+                                <h:message for="registration-password" styleClass="error-input"></h:message>
+                            </div> 
+                        </p>
+
+                        <p>
+                            <label for="confirm" >Reenter Password</label>   
+                            <h:inputSecret id="confirm" class="round full-width-input"
+                                           required="true"
+                                           requiredMessage="Please reenter your password."
+                                           style="#{component.valid ? '':'border-color: #CF4425;'}"
+                                           binding="#{pass_confirm}"
+                                           />
+                            <div class="error-message">
+                                <h:message for="confirm" styleClass="error-input"></h:message>
+                            </div> 
+                        </p>
+                        <p>                               
+                            <h:selectBooleanCheckbox id="admin" value="#{registrationBB.admin}" />
+                            <h:outputText value="Do you want to be an admin?"/>
+                        </p>
+
+                        <h:commandButton class="button round blue image-right ic-right-arrow" value="REGISTER" action="#{registrationBB.register}"/>
+
+
+                    </fieldset>
+
+                    <h:messages rendered="false"></h:messages>
+                    <br/>
+                    <p>Already registered? <h:link value="Log in!" outcome="login.xhtml"/></p>
+
+                </h:form>
+
+            </div>
+
+            <div id="footer">			
+                <p><strong>WPA Movie database</strong> by <h:outputLink id="link">Kuba Spatny</h:outputLink></p>
+            </div>
+
+
+
+
+
+
+        </h:body>
+    </f:view>
+</html>
+

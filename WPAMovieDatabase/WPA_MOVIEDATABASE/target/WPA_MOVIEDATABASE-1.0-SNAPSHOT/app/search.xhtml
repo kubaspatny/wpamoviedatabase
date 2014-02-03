@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      >
+    <h:body>
+
+        <ui:composition template="../template/commonLayout.xhtml">
+            <ui:define name="title"><h:outputText value="Search | WPA MOVIE DATABASE"/></ui:define>
+            <ui:define name="content">
+
+                <!-- MAIN CONTENT -->
+                <div id="content">
+
+                    <div class="page-full-width cf">
+
+                        <div class="content-module">
+                            <div class="content-module-maxheading cf">
+                                <h2 class="fl">
+                                    <h:outputText value="Search" />
+                                </h2>
+                            </div> <!-- end content-module-heading -->
+
+                            <div class="content-module-main">
+                                <div class="parent moviepreview">
+                                    <h:form>
+                                        <p>
+                                            <h:inputText id="search_query" class="round" value="#{searchBB.search_query}"
+                                                         required="true"
+                                                         requiredMessage="Please enter your query."                                                                 
+                                                         />
+
+                                            <div class="error-message">
+                                                <h:message for="search_query" styleClass="error-input"></h:message>
+                                            </div>
+                                        </p>
+
+                                        <p><strong>Search in: </strong></p>
+                                        <h:selectOneMenu style="width: 18.75em;" id="search_type" value="#{searchBB.search_type}">
+                                            <f:selectItem id="ii1" itemLabel="Actor" itemValue="Actor" />
+                                            <f:selectItem id="ii2" itemLabel="Director" itemValue="Director" />
+                                            <f:selectItem id="ii3" itemLabel="Writer" itemValue="Writer" />
+                                            <f:selectItem id="ii4" itemLabel="Movie" itemValue="Movie" />
+                                        </h:selectOneMenu>
+                                        <p></p>
+
+                                        <h:commandButton styleClass="round blue ic-right-arrow" value="Search" action="#{searchBB.search()}"/>
+                                    </h:form>
+                                </div>     
+
+                            </div> <!-- end full-width -->
+
+                        </div> <!-- end content -->
+                        
+                        <h:panelGroup layout="block" rendered="#{searchBB.showMovies}">
+                        <div class="content-module">
+                            <div class="content-module-maxheading cf">
+                                <h2 class="fl">
+                                    <h:outputText value="Movie Results" />
+                                </h2>
+                            </div> <!-- end content-module-heading -->
+
+                            <div class="content-module-main">
+                                
+                                <h:outputText rendered="#{empty searchBB.movieResults}" value="No results found." />
+                                
+                                <h:dataTable rendered="#{not empty searchBB.movieResults}" value="#{searchBB.movieResults}" var="movie" styleClass="normal" >
+                                    
+                                    <h:column>
+                                        <f:facet name="header" >
+                                            <h:outputText value="ID"/>
+                                        </f:facet>    
+                                        <h:outputText value="#{movie.id}"/>
+                                    </h:column>
+                                    
+                                    <h:column>
+                                        <f:facet name="header" >
+                                            <h:outputText value="Movie name"/>
+                                        </f:facet> 
+                                        <b>
+                                            <h:link style="color: black" outcome="movie" value="#{movie.name}">
+                                                <f:param name="id" value="#{movie.id}" />
+                                            </h:link>
+                                        </b>
+                                    </h:column>
+                                    
+                                    <h:column>
+                                        <f:facet name="header" >
+                                            <h:outputText value="Story"/>
+                                        </f:facet>    
+                                        <h:outputText value="#{movie.short_info.length() gt 120 ? movie.short_info.substring(0,120).concat('...') : movie.short_info}"></h:outputText>
+                                    </h:column>
+                                    
+                                    <h:column>
+                                        <f:facet name="header" >
+                                            <h:outputText value="Action"/>
+                                        </f:facet> 
+                                            <h:link outcome="movie" value="View">
+                                                <f:param name="id" value="#{movie.id}" />
+                                            </h:link>
+                                    </h:column>
+
+                                </h:dataTable>
+                                
+
+                            </div> <!-- end full-width -->
+
+                        </div> <!-- end content -->
+                        </h:panelGroup>
+                        
+                        <h:panelGroup layout="block" rendered="#{searchBB.showActors}">
+                        <div class="content-module">
+                            <div class="content-module-maxheading cf">
+                                <h2 class="fl">
+                                    <h:outputText value="Actor Results" />
+                                </h2>
+                            </div> <!-- end content-module-heading -->
+
+                            <div class="content-module-main">
+                                
+                                <h:outputText rendered="#{empty searchBB.actorResults}" value="No results found." />
+                                
+                                <h:dataTable rendered="#{not empty searchBB.actorResults}" value="#{searchBB.actorResults}" var="actor" styleClass="normal" >
+                                    
+                                    <h:column>
+                                        <f:facet name="header" >
+                                            <h:outputText value="ID"/>
+                                        </f:facet>    
+                                        <h:outputText value="#{actor.id}"/>
+                                    </h:column>
+                                    
+                                    <h:column>
+                                        <f:facet name="header" >
+                                            <h:outputText value="Actor name"/>
+                                        </f:facet> 
+                                        <b>
+                                            <h:link style="color: black" outcome="actor" value="#{actor.fullName}">
+                                                <f:param name="id" value="#{actor.id}" />
+                                            </h:link>
+                                        </b>
+                                    </h:column>
+                                    
+                                    <h:column>
+                                        <f:facet name="header" >
+                                            <h:outputText value="Action"/>
+                                        </f:facet> 
+                                            <h:link outcome="actor" value="View">
+                                                <f:param name="id" value="#{actor.id}" />
+                                            </h:link>
+                                    </h:column>
+
+                                </h:dataTable>
+                                
+
+                            </div> <!-- end full-width -->
+
+                        </div> <!-- end content -->
+                        </h:panelGroup>
+                        
+                        <h:panelGroup layout="block" rendered="#{searchBB.showDirectors}">
+                        <div class="content-module">
+                            <div class="content-module-maxheading cf">
+                                <h2 class="fl">
+                                    <h:outputText value="Director Results" />
+                                </h2>
+                            </div> <!-- end content-module-heading -->
+
+                            <div class="content-module-main">
+                                
+                                <h:outputText rendered="#{empty searchBB.directorResults}" value="No results found." />
+                                
+                                <h:dataTable rendered="#{not empty searchBB.directorResults}" value="#{searchBB.directorResults}" var="director" styleClass="normal" >
+                                    
+                                    <h:column>
+                                        <f:facet name="header" >
+                                            <h:outputText value="ID"/>
+                                        </f:facet>    
+                                        <h:outputText value="#{director.id}"/>
+                                    </h:column>
+                                    
+                                    <h:column>
+                                        <f:facet name="header" >
+                                            <h:outputText value="Director name"/>
+                                        </f:facet> 
+                                        <b>
+                                            <h:link style="color: black" outcome="director" value="#{director.fullName}">
+                                                <f:param name="id" value="#{director.id}" />
+                                            </h:link>
+                                        </b>
+                                    </h:column>
+                                    
+                                    <h:column>
+                                        <f:facet name="header" >
+                                            <h:outputText value="Action"/>
+                                        </f:facet> 
+                                            <h:link outcome="director" value="View">
+                                                <f:param name="id" value="#{director.id}" />
+                                            </h:link>
+                                    </h:column>
+
+                                </h:dataTable>
+                                
+                                
+                                
+
+                            </div> <!-- end full-width -->
+
+                        </div> <!-- end content -->
+                        </h:panelGroup>
+                        
+                        <h:panelGroup layout="block" rendered="#{searchBB.showWriters}">
+                        <div class="content-module">
+                            <div class="content-module-maxheading cf">
+                                <h2 class="fl">
+                                    <h:outputText value="Writer Results" />
+                                </h2>
+                            </div> <!-- end content-module-heading -->
+
+                            <div class="content-module-main">
+                                
+                                <h:outputText rendered="#{empty searchBB.writerResults}" value="No results found." />
+                                
+                                <h:dataTable rendered="#{not empty searchBB.writerResults}" value="#{searchBB.writerResults}" var="writer" styleClass="normal" >
+                                    
+                                    <h:column>
+                                        <f:facet name="header" >
+                                            <h:outputText value="ID"/>
+                                        </f:facet>    
+                                        <h:outputText value="#{writer.id}"/>
+                                    </h:column>
+                                    
+                                    <h:column>
+                                        <f:facet name="header" >
+                                            <h:outputText value="Writer name"/>
+                                        </f:facet> 
+                                        <b>
+                                            <h:link style="color: black" outcome="writer" value="#{writer.fullName}">
+                                                <f:param name="id" value="#{writer.id}" />
+                                            </h:link>
+                                        </b>
+                                    </h:column>
+                                    
+                                    <h:column>
+                                        <f:facet name="header" >
+                                            <h:outputText value="Action"/>
+                                        </f:facet> 
+                                            <h:link outcome="writer" value="View">
+                                                <f:param name="id" value="#{writer.id}" />
+                                            </h:link>
+                                    </h:column>
+
+                                </h:dataTable>
+
+                            </div> <!-- end full-width -->
+
+                        </div> <!-- end content -->
+                        </h:panelGroup>
+
+                    </div>
+
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+
+</html>

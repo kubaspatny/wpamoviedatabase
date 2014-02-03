@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      >
+    <h:body>
+
+        <ui:composition template="../template/commonLayout.xhtml">
+            <ui:define name="title"><h:outputText value="EDIT | #{castBB.movie.name}"/></ui:define>
+            <ui:define name="content">
+
+                <!-- MAIN CONTENT -->
+                <div id="content">
+                    <h:form>
+
+                        <div class="page-full-width cf">
+                            <div class="content-module">
+                                <div class="content-module-maxheading cf">
+                                    <h2 class="fl">
+                                        <h:outputText value="EDITING: #{editMovieBB.movie.name}" />
+                                    </h2>
+                                </div> <!-- end content-module-heading -->
+
+                                <div class="content-module-main">
+
+                                    <div class="content-module">
+
+                                        <div class="content-module-heading cf">
+                                            <h3 class="fl">Cast</h3>
+                                        </div> <!-- end content-module-heading -->
+
+                                        <div class="content-module-main">
+
+                                            <h:form>
+
+                                                <input type="hidden" id="id" name="id" value="#{param.id}"/>
+                                                <h:panelGrid id="panel" columns="3" style="width: 30%;">
+                                                    <h:outputText value="Actor" />
+                                                    <h:outputText value="Role" />
+                                                    <h:outputText value="Confirm" />
+
+                                                    <rich:autocomplete value="#{castBB.actor}" mode="cachedAjax" minChars="1" style="border: 0;" autocompleteMethod="#{autocompleteBB.completeAct}" />
+                                                    <h:inputText value="#{castBB.role}" />
+
+                                                    <h:commandButton value="add" action="#{castBB.addRole}" />
+
+                                                </h:panelGrid>
+
+                                                <h:dataTable value="#{castBB.movie.cast}" var="role" styleClass="cast">
+
+
+                                                    <h:column>
+                                                        <b><h:outputText value="#{role.actor.fullName}"/></b>
+                                                    </h:column>
+
+                                                    <h:column>
+                                                        <h:outputText value="#{role.role_name}"/>
+                                                    </h:column>
+                                                    
+                                                    <h:column>
+                                                        <h:commandButton value="X" action="#{castBB.delete(role.actor.id)}" />
+                                                    </h:column>
+
+                                                </h:dataTable>
+
+                                                <h:form>
+                                                    <h:commandButton value="Save" action="#{castBB.save}" />
+                                                </h:form>
+                                            </h:form> 
+
+
+
+                                        </div> <!-- end content-module-main -->
+
+                                    </div> <!-- end content-module -->
+
+
+                                </div> <!-- end full-width -->
+
+
+
+                            </div> <!-- end content -->
+
+                        </div>
+
+                    </h:form>
+                    
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+
+</html>

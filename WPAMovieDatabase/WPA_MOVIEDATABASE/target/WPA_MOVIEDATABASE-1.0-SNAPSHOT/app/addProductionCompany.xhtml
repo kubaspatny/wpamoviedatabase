@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      >
+    <h:body>
+
+        <ui:composition template="../template/commonLayout.xhtml">
+            <ui:define name="title"><h:outputText value="NEW PRODUCTION COMP | WPA MOVIE DATABASE"/></ui:define>
+            <ui:define name="content">
+
+                <!-- MAIN CONTENT -->
+                <div id="content">
+                    <h:form>
+
+                        <div class="page-full-width cf">
+                            <div class="content-module">
+                                <div class="content-module-maxheading cf">
+                                    <h2 class="fl">
+                                        <h:outputText value="ADDING NEW PRODUCTION COMPANY" />
+                                    </h2>
+                                </div> <!-- end content-module-heading -->
+
+                                <div class="content-module-main">
+
+                                    <div class="content-module">
+
+                                        <div class="content-module-heading cf">
+                                            <h3 class="fl">Basic Information</h3>
+                                        </div> <!-- end content-module-heading -->
+
+                                        <div class="content-module-main">
+                                            <div class="parent moviepreview">
+
+                                                <p>
+                                                    <p><strong>Name: </strong></p>
+                                                    <h:inputText id="name" class="round" value="#{newProducerBB.name}"
+                                                                 required="true"
+                                                                 requiredMessage="Please enter your first name."
+                                                                 style="#{component.valid ? '':'border-color: #CF4425;'}"
+                                                                 validator="#{newProducerBB.validateName}"
+                                                                 />
+
+                                                    <div class="error-message">
+                                                        <h:message for="name" styleClass="error-input"></h:message>
+                                                    </div>
+                                                </p>
+
+                                            </div>     
+
+
+                                        </div> <!-- end content-module-main -->
+
+                                    </div> <!-- end content-module -->
+
+                                    <h:commandButton styleClass="round blue ic-right-arrow" value="Save" action="#{newProducerBB.addProducer()}"/>
+
+                                </div> <!-- end full-width -->
+
+                            </div> <!-- end content -->
+
+                        </div>
+
+                    </h:form>
+
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+
+</html>

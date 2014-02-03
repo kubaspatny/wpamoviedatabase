@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:sec="http://www.springframework.org/security/facelets/tags"
+      >
+    <h:body>
+
+        <ui:composition template="../template/commonLayout.xhtml">
+            <ui:define name="content">
+
+                <!-- MAIN CONTENT -->
+                <div id="content">
+
+                    <div class="page-full-width cf">
+                        <div class="content-module">
+                            <div class="content-module-maxheading cf">
+                                <h2 class="fl">
+                                    <h:outputText value="#{movieBB.movie.name}" />
+                                </h2>
+                                <sec:ifAllGranted roles="ROLE_ADMIN">
+                                    <h2 class="fr">
+                                        <h:link style="color: white;" outcome="edit_movie" value="EDIT">
+                                            <f:param name="id" value="#{movieBB.movie.id}" />
+                                        </h:link>
+                                    </h2>
+                                </sec:ifAllGranted>
+                            </div> <!-- end content-module-heading -->
+
+                            <div class="content-module-main">
+
+                                <div class="half-size-column fl">
+
+                                    <div class="content-module">
+
+                                        <div class="content-module-heading cf">
+                                            <h3 class="fl">Basic Information</h3>
+                                        </div> <!-- end content-module-heading -->
+
+                                        <div class="content-module-main">
+
+                                            <div class="parent moviepreview">
+
+                                                <h:graphicImage styleClass="poster fl" url="#{movieBB.movie.poster_url}" id="image1"/>
+                                                <p><h:outputText value="#{movieBB.movie.short_info}"/></p>
+                                                <p><strong>Director: </strong>
+                                                    <h:link style="color: #9498a1" outcome="director" value="#{movieBB.movie.director.fullName}" rendered="#{not empty movieBB.movie.director}">
+                                                        <f:param name="id" value="#{movieBB.movie.director.id}" />
+                                                    </h:link>
+                                                    <h:outputText rendered="#{empty movieBB.movie.director}" value="Not added yet."></h:outputText>
+                                                </p>
+                                                <p><strong>Writer: </strong>
+                                                    <h:link style="color: #9498a1" outcome="writer" value="#{movieBB.movie.writer.fullName}" rendered="#{not empty movieBB.movie.writer}">
+                                                        <f:param name="id" value="#{movieBB.movie.writer.id}" />
+                                                    </h:link>
+                                                    <h:outputText rendered="#{empty movieBB.movie.writer}" value="Not added yet."></h:outputText>
+                                                </p>
+                                                <p><strong>Length: </strong><h:outputText value="#{empty movieBB.movie.movie_length ? 'Not added yet.' : movieBB.movie.movie_length}"></h:outputText></p>
+                                                <p><strong>Genre: </strong><h:outputText value="#{empty movieBB.movie.genre ? 'Not added yet.' : movieBB.movie.genre}"></h:outputText></p>
+                                                <p><strong>Release Date: </strong><h:outputText value="#{empty movieBB.movie.release_date ? 'Not added yet.' : movieBB.movie.release_date}"></h:outputText></p>
+                                                <p><strong>Ranking: </strong><h:outputText value="#{empty movieBB.movie.age_rating ? 'Not added yet.' : movieBB.movie.age_rating}"></h:outputText></p>
+                                                <p><strong>Budget: </strong><h:outputText value="#{empty movieBB.movie.budget ? 'Not added yet.' : movieBB.movie.budget}"></h:outputText></p>
+
+                                            </div>     
+
+                                            <div class="stripe-separator"><!--  --></div>
+                                            <p><h:outputText value="#{movieBB.movie.long_info}"/></p>
+
+                                        </div> <!-- end content-module-main -->
+
+                                    </div> <!-- end content-module -->
+
+                                </div>
+
+                                <div class="half-size-column fr">
+
+                                    <div class="content-module">
+
+                                        <div class="content-module-heading cf">
+                                            <h3 class="fl">Cast</h3>
+                                        </div> <!-- end content-module-heading -->
+
+
+                                        <h:dataTable value="#{movieBB.movie.cast}" var="role" styleClass="cast">
+
+
+                                            <h:column>
+                                                <b>
+                                                    <h:link style="color: black" outcome="actor" value="#{role.actor.fullName}">
+                                                        <f:param name="id" value="#{role.actor.id}" />
+                                                    </h:link>
+                                                </b>
+                                            </h:column>
+
+                                            <h:column>
+                                                <h:outputText value="#{role.role_name}"/>
+                                            </h:column>
+
+                                        </h:dataTable>
+
+                                    </div> <!-- end content-module -->
+
+                                    <div class="content-module">
+
+                                        <div class="content-module-heading cf">
+                                            <h3 class="fl">Additional Info</h3>
+                                        </div> <!-- end content-module-heading -->
+
+                                        <div class="content-module-main moviepreview">
+                                            <p><strong>Production Company:  </strong>
+                                                <h:link style="color: #9498a1" outcome="producer" value="#{movieBB.movie.producer.name}" rendered="#{not empty movieBB.movie.producer}">
+                                                    <f:param name="id" value="#{movieBB.movie.producer.id}" />
+                                                </h:link>
+                                                <h:outputText rendered="#{empty movieBB.movie.producer}" value="Not added yet."></h:outputText>
+                                            </p>
+                                            <p><strong>Created by:  </strong><h:outputText value="#{empty movieBB.movie.createdBy ? 'Not added yet.' : movieBB.movie.createdBy.username}"></h:outputText></p>
+
+
+                                        </div> <!-- end content-module-main -->
+
+                                    </div> <!-- end content-module -->
+
+                                    <div class="content-module">
+
+                                        <div class="content-module-heading cf">
+                                            <h3 class="fl">User Rating</h3>
+                                        </div> <!-- end content-module-heading -->
+
+                                        <div class="content-module-main moviepreview">
+                                            <p><strong>Rating:  </strong><h:outputText value="#{movieBB.movie.user_rating}"></h:outputText></p>
+                                            <h:form rendered="#{not movieBB.user.hasRated(param.id)}">
+                                                <input name="id" id="id" value="#{param.id}" type="hidden"/>
+                                                <h:selectOneMenu style="width: 18.75em;" id="rating" value="#{movieBB.rating}">
+                                                    <f:selectItem id="i1" itemLabel="1" itemValue="1" />
+                                                    <f:selectItem id="i2" itemLabel="2" itemValue="2" />
+                                                    <f:selectItem id="i3" itemLabel="3" itemValue="3" />
+                                                    <f:selectItem id="i4" itemLabel="4" itemValue="4" />
+                                                    <f:selectItem id="i5" itemLabel="5" itemValue="5" />
+                                                    <f:selectItem id="i6" itemLabel="6" itemValue="6" />
+                                                    <f:selectItem id="i7" itemLabel="7" itemValue="7" />
+                                                    <f:selectItem id="i8" itemLabel="8" itemValue="8" />
+                                                    <f:selectItem id="i9" itemLabel="9" itemValue="9" />
+                                                    <f:selectItem id="i10" itemLabel="10" itemValue="10" />
+                                                </h:selectOneMenu>
+                                                <h:commandButton value="Rate" action="#{movieBB.rate()}" />
+                                                <p></p>
+                                            </h:form>
+                                            <h:outputText rendered="#{movieBB.user.hasRated(param.id)}" value="Thanks for your rating!"/>
+                                        </div>     
+
+
+                                    </div> <!-- end content-module-main -->
+
+                                </div> <!-- end content-module -->
+
+
+                            </div> <!-- end content-module-main -->
+
+                        </div> <!-- end content-module -->
+
+                    </div>
+
+
+                </div> <!-- end content -->
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+
+</html>

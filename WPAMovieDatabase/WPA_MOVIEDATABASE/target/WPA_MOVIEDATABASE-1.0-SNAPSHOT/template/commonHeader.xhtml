@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:sec="http://www.springframework.org/security/facelets/tags"
+      >
+    <body>
+        <ui:composition>
+
+            <!-- TOP BAR -->
+            <div id="top-bar">
+
+                <div class="page-full-width cf">
+
+                    <ul id="nav" class="fl">
+                        <li class="v-sep"><a href="#" class="round button dark menu-user image-left">Logged in as <strong><h:outputText value="#{userBB.username}"></h:outputText></strong></a>
+                            <ul>
+                                <li><h:link outcome="userdetails">Profile</h:link></li>						
+                            </ul> 
+
+                        </li>
+                    </ul>
+
+                    <ul id="nav" class="fl">
+                        <li><h:link styleClass="round button dark" value="Home" outcome="index" /></li>
+                        <li><h:link styleClass="round button dark" value="Top 10" outcome="top10" /></li>
+                        <li class="v-sep"><h:outputLink styleClass="round button dark">Genres</h:outputLink>
+                            <ul>
+                                <li>
+                                    <h:link outcome="top10" value="Action">
+                                            <f:param name="genre" value="Action" />
+                                    </h:link>
+                                </li>						
+                                <li>
+                                    <h:link outcome="top10" value="Comedy">
+                                            <f:param name="genre" value="Comedy" />
+                                    </h:link>
+                                </li>						
+                                <li>
+                                    <h:link outcome="top10" value="Fantasy">
+                                            <f:param name="genre" value="Fantasy" />
+                                    </h:link>
+                                </li>						
+                                <li>
+                                    <h:link outcome="top10" value="Sci-fi">
+                                            <f:param name="genre" value="Sci-fi" />
+                                    </h:link>
+                                </li>						
+                            </ul> 
+                        </li>
+                    </ul>
+
+                    <sec:ifAllGranted roles="ROLE_ADMIN">
+                    <ul id="nav" class="fl">
+                        <li><h:link styleClass="round button dark image-right ic-add" outcome="addmovie">Add movie</h:link></li>
+                    </ul>
+                    
+                    <ul id="nav" class="fl">
+                        <li><h:link styleClass="round button dark image-right ic-add" outcome="addPerson">Add person</h:link></li>
+                    </ul>
+                        
+                    <ul id="nav" class="fl">
+                        <li class="v-sep"><h:link styleClass="round button dark image-right ic-add" outcome="addProductionCompany">Add Producer</h:link></li>
+                    </ul>
+                    </sec:ifAllGranted>
+
+                    <ul id="nav" class="fl">
+                        <li><h:link styleClass="round button dark image-right ic-search" outcome="search">Search</h:link></li>
+                    </ul>
+                    <!--
+                    <h:button value="LOG OUT" outcome="" />
+                    -->
+                    
+                    <!--
+                    <h:form>
+                        <h:commandLink class="round button dark menu-logoff image-left fr" value="Log out" action=""/>
+                    </h:form>
+                    -->
+                    
+                    <a class="round button dark menu-logoff image-left fr" href="#{facesContext.externalContext.requestContextPath}/static/j_spring_security_logout">Log Out</a>
+                    
+
+                </div> <!-- end full-width -->	
+
+            </div> <!-- end top-bar -->
+
+        </ui:composition>
+    </body>
+</html>

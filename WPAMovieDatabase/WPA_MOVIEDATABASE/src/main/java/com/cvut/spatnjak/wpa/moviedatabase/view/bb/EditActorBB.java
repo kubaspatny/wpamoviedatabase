@@ -1,0 +1,170 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.cvut.spatnjak.wpa.moviedatabase.view.bb;
+
+import com.cvut.spatnjak.wpa.moviedatabase.dto.ActorDto;
+import com.cvut.spatnjak.wpa.moviedatabase.service.IActorService;
+import java.io.IOException;
+import java.util.Date;
+import java.util.Map;
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+/**
+ *
+ * @author Kuba
+ */
+@Component("editActorBB")
+@Scope("request")
+public class EditActorBB {
+    
+    @Autowired
+    private AutocompleteBB autoCompleteBB;
+
+    Map<String, String> params;
+    private ActorDto actor;
+    String first_name;
+    String last_name;
+    String biography;
+    Date dob;
+    String image_url;
+    String id_str;
+
+    public String getId_str() {
+        return id_str;
+    }
+
+    public void setId_str(String id_str) {
+        this.id_str = id_str;
+    }
+    @Autowired
+    private IActorService actorService;
+
+    @PostConstruct
+    public void init() throws IOException {
+        params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        String id_string = params.get("id");
+
+        Long id = -1l;
+        try {
+            id = Long.parseLong(id_string);
+        } catch (NumberFormatException n) {
+        }
+        System.out.println("id_long: " + id);
+
+        actor = actorService.getActorById(id);
+        if (actor == null) {
+            actor = new ActorDto();
+            error();
+            return;
+        }
+        
+        this.first_name = actor.getFirst_name();
+        this.last_name = actor.getLast_name();
+        this.image_url = actor.getImage_url();
+        this.dob = actor.getDate_of_birth();
+        this.biography = actor.getBiography();
+
+    }
+    
+
+    public String save() {
+        actor.setBiography(biography);
+        actor.setFirst_name(first_name);
+        actor.setLast_name(last_name);
+        actor.setDate_of_birth(dob);
+        actor.setImage_url(image_url);
+        
+        actorService.updateActor(actor);
+        
+        return "actor?faces-redirect=true&id=" + (long) actor.getId();
+    }
+    
+    public String delete() {               
+        actorService.deleteActor(actor.getId());
+        autoCompleteBB.updateActors();
+        return "index?faces-redirect=true";
+    }
+
+    private static Long parseForID(String s) {
+        Long result;
+        try {
+            String number = s.substring(s.indexOf("(") + 1, s.lastIndexOf(")"));
+            if(number == null || number.isEmpty()) throw new Exception("wrong format");
+            result = Long.parseLong(number);
+        } catch (Exception e) {
+            return null;
+        }
+        return result;
+    }
+    
+    private void error() throws IOException {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        facesContext.getExternalContext().responseSendError(404, "Actor with this ID doesn't exist");
+        facesContext.responseComplete();
+    }
+
+    public ActorDto getActor() {
+        return actor;
+    }
+
+    public void setActor(ActorDto actor) {
+        this.actor = actor;
+    }
+
+    public String getFirst_name() {
+        return first_name;
+    }
+
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
+
+    public String getBiography() {
+        return biography;
+    }
+
+    public void setBiography(String biography) {
+        this.biography = biography;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
+    }
+    
+    public void validateLenght255(FacesContext facesContext, UIComponent uiComponent, Object newValue) throws ValidatorException {
+        String number = (String) newValue;
+        if (number.length() > 255) {
+            throw new ValidatorException(new FacesMessage("Field is limited to 255 characters!"));
+        }
+    }
+    
+}

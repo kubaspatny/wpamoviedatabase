@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      >
+    <h:body>
+
+        <ui:composition template="../template/commonLayout.xhtml">
+            <ui:define name="title"><h:outputText value="WPA Movie Database | TOP 10"/></ui:define>
+            <ui:define name="content">
+
+                <!-- MAIN CONTENT -->
+                <div id="content">
+
+                    <div class="page-full-width cf">
+
+                        <div class="content-module">
+
+                            <div class="content-module-heading cf">
+                                
+                                <h3 class="fl"><h:outputText value="TOP 10 - #{empty top10BB.genre ? 'ALL' : top10BB.genre}"/></h3>
+
+                            </div> <!-- end content-module-heading -->
+                            <div class="content-module-main">
+                                <h:dataTable value="#{top10BB.top10}" var="movie" styleClass="normal">
+                                    <h:column>
+                                        <f:facet name="header" >
+                                            <h:outputText value="ID"/>
+                                        </f:facet>    
+                                        <h:outputText value="#{movie.id}"/>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header" >
+                                            <h:outputText value="Movie name"/>
+                                        </f:facet> 
+                                        <b>
+                                            <h:link style="color: black" outcome="movie" value="#{movie.name}">
+                                                <f:param name="id" value="#{movie.id}" />
+                                            </h:link>
+                                        </b>
+                                    </h:column>
+
+                                    <h:column rendered="#{empty top10BB.genre}">
+                                        <f:facet name="header" >
+                                            <h:outputText value="Genre"/>
+                                        </f:facet>    
+                                        <h:outputText value="#{movie.genre}"/>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header" >
+                                            <h:outputText value="Age rating"/>
+                                        </f:facet>    
+                                        <h:outputText value="#{movie.age_rating}"/>
+                                    </h:column> 
+
+                                    <h:column>
+                                        <f:facet name="header" >
+                                            <h:outputText value="User rating"/>
+                                        </f:facet>    
+                                        <h:outputText value="#{movie.user_rating}"/>
+                                    </h:column>  
+
+                                    
+
+                                    <h:column>
+                                        <f:facet name="header" >
+                                            <h:outputText value="Budget"/>
+                                        </f:facet>    
+                                        <h:outputText value="$#{movie.budget}" class="fr" style="margin-right: 2em"/>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header" >
+                                            <h:outputText value="Release Date"/>
+                                        </f:facet>    
+                                        <h:outputText value="#{movie.release_date}"/>
+                                    </h:column>
+                                    
+                                    <h:column>
+                                        <f:facet name="header" >
+                                            <h:outputText value="Length"/>
+                                        </f:facet>    
+                                        <h:outputText value="#{movie.movie_length} min"/>
+                                    </h:column>
+
+                                </h:dataTable>
+
+                            </div> 
+
+
+                        </div>
+
+                    </div> <!-- end full-width -->
+
+                </div> <!-- end content -->
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+
+</html>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
+    <f:view>
+        <ui:insert name="preRenderEvent"></ui:insert>
+        <h:head>
+            <f:facet name="first">
+                <title><ui:insert name="title">WPA MOVIE DATABASE</ui:insert></title>
+                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                <!-- Stylesheets -->
+                <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet'></link>
+            </f:facet>
+
+
+
+
+            <!-- jQuery & JS files -->
+            <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+            <ui:insert name="image_script"></ui:insert>
+            <script type="text/javascript">
+                jQuery(document).ready(function() {
+                    var $ = jQuery;
+                    var Element = ".poster";
+                    $(Element).error(function() {
+                        $(this).unbind("error").attr("src", "http://l.yimg.com/os/mit/media/m/entity/images/movie_placeholder-103642.png");
+                    });
+                });
+            </script>
+
+            <!--
+            <f:facet name="last">
+                <h:outputStylesheet name="css/style.css"/>
+            </f:facet>
+            -->
+            <h:outputStylesheet name="css/style.css" />
+
+
+        </h:head>
+
+        <h:body>
+
+
+
+
+
+
+
+
+
+            <ui:insert name="header" >
+                <ui:include src="commonHeader.xhtml" />
+            </ui:insert>
+
+            <ui:insert name="content" >
+                <ui:include src="commonContent.xhtml" />
+            </ui:insert>
+
+            <ui:insert name="footer" >
+                <ui:include src="commonFooter.xhtml" />
+            </ui:insert>
+        </h:body>
+    </f:view>
+</html>
